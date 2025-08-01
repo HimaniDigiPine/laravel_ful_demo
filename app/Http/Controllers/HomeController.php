@@ -26,8 +26,8 @@ class HomeController extends Controller
         return view('auth.login');
     }
 
-    public function test(){
-        
-        return view('admin.dashboard');
+    public function dashboard()
+    {
+        return view('admin.dashboard'); 
     }
 }

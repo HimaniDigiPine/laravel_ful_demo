@@ -126,12 +126,18 @@
                                         <!--end::Link-->
                                     </div>
                                     <!--begin::Heading-->
+
                                     <!--begin::Input group=-->
                                     <div class="fv-row mb-8">
                                         <!--begin::Email-->
                                         <input type="text" placeholder="Email" name="email" autocomplete="off" class="form-control bg-transparent" />
                                         <!--end::Email-->
                                     </div>
+                                    @error('email')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                     <!--begin::Actions-->
                                     <div class="d-flex flex-wrap justify-content-center pb-lg-0">
                                         <button type="button" id="kt_password_reset_submit" class="btn btn-primary me-4">

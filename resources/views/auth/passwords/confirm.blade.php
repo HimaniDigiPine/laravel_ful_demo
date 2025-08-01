@@ -126,13 +126,7 @@
                                         <!--end::Link-->
                                     </div>
                                     <!--begin::Heading-->
-                                    <!--begin::Input group=-->
-                                    <div class="fv-row mb-8">
-                                        <!--begin::Email-->
-                                        <input type="text" placeholder="Email" name="email" autocomplete="off" class="form-control bg-transparent" />
-                                        <!--end::Email-->
-                                    </div>
-
+                                    
                                     <!--begin::Input group-->
                                     <div class="fv-row mb-8" data-kt-password-meter="true">
                                         <!--begin::Wrapper-->
@@ -161,26 +155,24 @@
                                         <!--end::Hint-->
                                     </div>
                                     <!--end::Input group=-->
-                                    <!--end::Input group=-->
-                                    <div class="fv-row mb-8">
-                                        <!--begin::Repeat Password-->
-                                        <input placeholder="Repeat Password" name="password_confirmation" type="password" autocomplete="off" class="form-control bg-transparent" />
-                                        <!--end::Repeat Password-->
-                                    </div>
-                                    <!--end::Input group=-->
 
                                     
                                     <!--begin::Actions-->
                                     <div class="d-flex flex-wrap justify-content-center pb-lg-0">
                                         <button type="button" id="kt_password_reset_submit" class="btn btn-primary me-4">
                                             <!--begin::Indicator label-->
-                                            <span class="indicator-label">Reset Password</span>
+                                            <span class="indicator-label">Confirm Password</span>
                                             <!--end::Indicator label-->
                                             <!--begin::Indicator progress-->
                                             <span class="indicator-progress">Please wait...
                                             <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                                             <!--end::Indicator progress-->
                                         </button>
+                                        @if (Route::has('password.request'))
+                                            <a class="btn btn-link" href="{{ route('password.request') }}">
+                                                {{ __('Forgot Your Password?') }}
+                                            </a>
+                                        @endif
                                         <a href="../../demo1/dist/authentication/layouts/overlay/sign-in.html" class="btn btn-light">Cancel</a>
                                     </div>
                                     <!--end::Actions-->
