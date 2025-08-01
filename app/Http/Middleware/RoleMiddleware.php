@@ -17,14 +17,11 @@ class RoleMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         // Allow register and login routes
-        if ($request->is('login') || $request->is('register')) {
-            return $next($request);
-        }
-
+        
         if (Auth::check() && Auth::user()->email === 'himani@digipineinfotech.com') {
             return $next($request);
         }
 
-        return redirect('/login')->with('error', 'Unauthorized access.');
+        return redirect('/middlewareCheck')->with('error', 'Unauthorized access.');
     }
 }
