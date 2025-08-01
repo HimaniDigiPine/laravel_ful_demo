@@ -17,7 +17,7 @@
 
 		<!--begin::Mobile logo-->
 		<div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
-			<a href="{{ route('admin.dashboard') }}" class="d-lg-none">
+			<a href="" class="d-lg-none">
 				<img alt="Logo" src="{{ asset('admin-assets/images/logos/default-small.svg') }}" class="h-30px" />
 			</a>
 		</div>
@@ -275,7 +275,10 @@
 						<!--end::Menu item-->
 						<!--begin::Menu item-->
 						<div class="menu-item px-5">
-							<a href="../../demo1/dist/authentication/layouts/corporate/sign-in.html" class="menu-link px-5">Sign Out</a>
+							<a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="menu-link px-5">Sign Out</a>
+							<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+							    @csrf
+							</form>
 						</div>
 						<!--end::Menu item-->
 					</div>

@@ -56,7 +56,7 @@
 				<div class="app-wrapper flex-column flex-row-fluid" id="kt_app_wrapper">
 
 					<!-- Siderbar Start -->
-					@include('admin.partials.sidebar');
+					@include('admin.partials.sidebar')
 					<!-- Sidebar End -->
 
 
@@ -80,7 +80,7 @@
 						<!--end::Content wrapper-->
 
 						<!-- Footer Start -->
-						@include('admin.partials.footer');
+						@include('admin.partials.footer')
 						<!-- Footer End -->
 
 					</div>
