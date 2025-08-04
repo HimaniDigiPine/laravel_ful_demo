@@ -29,24 +29,42 @@
 
 				<!--begin::Menu-->
 				<div class="menu menu-column menu-rounded menu-sub-indention fw-semibold fs-6" id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
-					<!--begin:Menu item-->
-					<div data-kt-menu-trigger="click" class="menu-item here show menu-accordion">
-						<!--begin:Menu link-->
-						<span class="menu-link">
-							<span class="menu-icon">
-								<i class="ki-duotone ki-element-11 fs-2">
-									<span class="path1"></span>
-									<span class="path2"></span>
-									<span class="path3"></span>
-									<span class="path4"></span>
-								</i>
-							</span>
-							<span class="menu-title">Dashboards</span>
-							<span class="menu-arrow"></span>
-						</span>
-						<!--end:Menu link-->
-					</div>
-					<!--end:Menu item-->
+					
+					 <!--begin:Menu item-->
+                    <div class="menu-item">
+                        <!--begin:Menu link-->
+                        <a class="menu-link" href="{{ route('home') }}">
+	                        <span class="menu-icon">
+		                        <i class="ki-duotone ki-code fs-2">
+			                        <span class="path1"></span>
+			                        <span class="path2"></span>
+			                        <span class="path3"></span>
+			                        <span class="path4"></span>
+		                        </i>
+	                        </span>
+	                        <span class="menu-title">Dashboard</span>
+                        </a>
+                        <!--end:Menu link-->
+                    </div>
+                    <!--end:Menu item--> 
+
+                    <!--begin:Menu item-->
+                    <div class="menu-item">
+                        <!--begin:Menu link-->
+                        <a class="menu-link" href="{{ route('admin.categories.index') }}">
+	                        <span class="menu-icon">
+		                        <i class="ki-duotone ki-code fs-2">
+			                        <span class="path1"></span>
+			                        <span class="path2"></span>
+			                        <span class="path3"></span>
+			                        <span class="path4"></span>
+		                        </i>
+	                        </span>
+	                        <span class="menu-title">Category</span>
+                        </a>
+                        <!--end:Menu link-->
+                    </div>
+                    <!--end:Menu item--> 
 
 				</div>
 				<!--end::Menu-->

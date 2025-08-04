@@ -140,8 +140,7 @@
 		        window.$ = jQuery;
 		    }
 		</script>
-		<script src="https://cdn.jsdelivr.net/jquery.validation/1.19.5/jquery.validate.min.js"></script>
-
+		
 		<!-- Datatable -->
 		<script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
 
@@ -170,6 +169,8 @@
 		<script src="{{ asset('admin-assets/js/custom/utilities/modals/new-target.js') }}"></script>
 		<script src="{{ asset('admin-assets/js/custom/utilities/modals/users-search.js') }}"></script>
 		<!--end::Custom Javascript-->
+
+		
 
 		<!-- Page-specific scripts -->
 		@stack('scripts')
