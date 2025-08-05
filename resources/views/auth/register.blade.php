@@ -112,6 +112,7 @@
                             <div class="d-flex flex-center flex-column flex-column-fluid pb-15 pb-lg-20">
                                 <!--begin::Form-->
                                 <form class="form w-100" novalidate="novalidate" id="kt_sign_up_form" method="POST" action="{{ route('register') }}">
+                                     @csrf
                                     <!--begin::Heading-->
                                     <div class="text-center mb-11">
                                         <!--begin::Title-->
@@ -196,6 +197,21 @@
                                         <!--end::Repeat Password-->
                                     </div>
                                     <!--end::Input group=-->
+
+                                    <!--begin::Input group=-->
+                                    <div class="fv-row mb-8">
+                                        <!--begin::Role-->
+                                        <!--<label for="role" class="form-label">Role</label> -->
+                                            <select class="form-select" name="role" id="role" required>
+                                                <option value="user">User</option>
+                                                <option value="admin">Admin</option>
+                                                <option value="staff">Staff</option>
+                                            </select>
+                                        <!--end::Role-->
+                                    </div>
+                                    <!--begin::Input group-->
+
+
                                     <!--begin::Accept-->
                                     <div class="fv-row mb-8">
                                         <label class="form-check form-check-inline">
@@ -354,7 +370,7 @@
         <script src="{{asset('admin-assets/js/scripts.bundle.js')}}"></script>
         <!--end::Global Javascript Bundle-->
         <!--begin::Custom Javascript(used for this page only)-->
-        <script src="{{asset('admin-assets/js/custom/authentication/sign-up/general.js')}}"></script>
+        
 
 
         <!--end::Custom Javascript-->
@@ -389,9 +405,12 @@ $(document).ready(function () {
                 required: true,
                 minlength: 8
             },
-            "confirm-password": {
+            password_confirmation: {
                 required: true,
                 equalTo: "[name='password']"
+            },
+            role: { 
+                required: true 
             },
             toc: {
                 required: true
@@ -410,9 +429,12 @@ $(document).ready(function () {
                 required: "Please enter a password",
                 minlength: "Password must be at least 8 characters"
             },
-            "confirm-password": {
+            password_confirmation: {
                 required: "Please re-enter your password",
                 equalTo: "Passwords do not match"
+            },
+            role: { 
+                required: "Please select a role" 
             },
             toc: {
                 required: "You must accept the terms"
@@ -427,7 +449,19 @@ $(document).ready(function () {
             $(element).removeClass("is-invalid");
         },
         submitHandler: function (form) {
-            form.submit();
+            $.ajax({
+                url: $(form).attr('action'),
+                type: $(form).attr('method'),
+                data: $(form).serialize(),
+                success: function (response) {
+                    if (response.status === 'success') {
+                        window.location.href = response.redirect;
+                    }
+                },
+                error: function (xhr) {
+                    alert('Registration failed. Please check inputs.');
+                }
+            });
         }
     });
 });

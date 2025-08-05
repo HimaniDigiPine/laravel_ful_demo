@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
@@ -52,6 +53,7 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'role' => ['required', 'in:admin,user,staff'],
         ]);
     }
 
@@ -67,6 +69,28 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'role' => $data['role'],
         ]);
+    }
+
+
+    protected function registered(Request $request, $user)
+    {
+        $redirectUrl = match($user->role) {
+            'admin' => route('hello.admin'),
+            'staff' => route('hello.staff'),
+            default => route('hello.user'),
+        };
+
+        // If AJAX request (Matronic form uses AJAX)
+        if ($request->ajax()) {
+            return response()->json([
+                'status' => 'success',
+                'redirect' => $redirectUrl,
+            ]);
+        }
+
+        //  Normal form submit fallback
+        return redirect($redirectUrl)->with('success', 'Registration successful!');
     }
 }

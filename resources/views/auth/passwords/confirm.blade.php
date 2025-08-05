@@ -114,7 +114,7 @@
                         <div class="d-flex flex-center flex-column align-items-stretch h-lg-100 w-md-400px">
 
                             <div class="d-flex flex-center flex-column flex-column-fluid pb-15 pb-lg-20">
-                                <form class="form w-100" novalidate="novalidate" id="kt_password_reset_form"  method="POST" action="{{ route('password.confirm') }}">
+                                <form class="form w-100" novalidate="novalidate" id="kt_password_reset_form"  method="POST" action="{{ route('password.confirm') }}" >
                                      @csrf
                                     <!--begin::Heading-->
                                     <div class="text-center mb-10">
