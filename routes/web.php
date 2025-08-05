@@ -43,9 +43,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
 // Products
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('products', ProductController::class);
+
+    // Restore and Force Delete
+    Route::post('products/restore/{id}', [ProductController::class, 'restore'])->name('products.restore');
+    Route::delete('products/force-delete/{id}', [ProductController::class, 'forceDelete'])->name('products.forceDelete');
+
+    // Bulk Delete
     Route::delete('products/bulk-delete', [ProductController::class, 'bulkDelete'])->name('products.bulkDelete');
-    Route::post('products/{id}/restore', [ProductController::class, 'restore'])->name('products.restore');
-    Route::delete('products/{id}/force-delete', [ProductController::class, 'forceDelete'])->name('products.forceDelete');
-    Route::get('/admin/get-subcategories/{category_id}', [SubcategoryController::class, 'getSubcategories'])
-    ->name('admin.getSubcategories');
+
+    // AJAX - Get Subcategories by Category
+    Route::get('get-subcategories/{categoryId}', [ProductController::class, 'getSubcategories'])->name('products.getSubcategories');
 });

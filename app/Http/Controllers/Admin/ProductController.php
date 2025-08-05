@@ -235,9 +235,9 @@ class ProductController extends Controller
     /**
      * Get Subcategories for Category
      */
-    public function getSubcategories($category_id)
+    public function getSubcategories($categoryId)
     {
-        $subcategories = Subcategory::where('category_id', $category_id)
+        $subcategories = Subcategory::where('category_id', $categoryId)
             ->where('status', 'active')
             ->get();
 

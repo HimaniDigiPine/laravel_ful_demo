@@ -101,7 +101,7 @@
                                 <input type="file" class="form-control form-control-solid" name="image" accept="image/*" />
                                 @if($product->image)
                                     <div class="mt-2">
-                                        <img src="{{ asset('storage/products/'.$product->image) }}" width="100" class="img-thumbnail">
+                                        <img src="{{ asset('storage/'.$product->image) }}" width="100" class="img-thumbnail">
                                     </div>
                                 @endif
                             </div>
@@ -115,7 +115,7 @@
                             <!-- Price -->
                             <div class="fv-row mb-7">
                                 <label class="fs-6 fw-semibold form-label mt-3"><span class="required">Price</span></label>
-                                <input type="number" step="0.01" class="form-control form-control-solid" 
+                                <input type="number"  class="form-control form-control-solid" 
                                        name="price" value="{{ old('price', $product->price) }}" required />
                             </div>
 
@@ -194,7 +194,7 @@ $(document).ready(function () {
             name: { required: true, minlength: 3 },
             slug: { required: true },
             category_id: { required: true },
-            price: { required: true, number: true },
+            price: { required: true},
             status: { required: true }
         },
         messages: {

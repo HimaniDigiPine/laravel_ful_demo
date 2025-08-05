@@ -140,6 +140,31 @@ $(document).ready(function () {
         }
     });
 
+
+    $('#category_id').change(function () {
+    var categoryId = $(this).val();
+
+        if (categoryId) {
+            $.ajax({
+                url: '/admin/get-subcategories/' + categoryId,
+                type: 'GET',
+                success: function (data) {
+                    $('#sub_category_id').empty();
+                    if (data.length > 0) {
+                        $('#sub_category_id').append('<option value="">Select Subcategory</option>');
+                        $.each(data, function (key, subcat) {
+                            $('#sub_category_id').append('<option value="' + subcat.id + '">' + subcat.name + '</option>');
+                        });
+                    } else {
+                        $('#sub_category_id').append('<option value="">No subcategories found</option>');
+                    }
+                }
+            });
+        } else {
+            $('#sub_category_id').empty().append('<option value="">Select Category First</option>');
+        }
+    });
+
 });
 </script>
 @endpush
