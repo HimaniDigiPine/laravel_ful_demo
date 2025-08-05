@@ -5,6 +5,7 @@ use App\Http\Middleware\RoleMiddleware;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\SubcategoryController;
+use App\Http\Controllers\Admin\ProductController;
 
 
 
@@ -30,10 +31,21 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
 });
 
 
-
+//Sub Categories
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('subcategories', SubcategoryController::class);
     Route::delete('subcategories/bulk-delete', [SubcategoryController::class, 'bulkDelete'])->name('subcategories.bulkDelete');
     Route::post('subcategories/{id}/restore', [SubcategoryController::class, 'restore'])->name('subcategories.restore');
     Route::delete('subcategories/{id}/force-delete', [SubcategoryController::class, 'forceDelete'])->name('subcategories.forceDelete');
+});
+
+
+// Products
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::resource('products', ProductController::class);
+    Route::delete('products/bulk-delete', [ProductController::class, 'bulkDelete'])->name('products.bulkDelete');
+    Route::post('products/{id}/restore', [ProductController::class, 'restore'])->name('products.restore');
+    Route::delete('products/{id}/force-delete', [ProductController::class, 'forceDelete'])->name('products.forceDelete');
+    Route::get('/admin/get-subcategories/{category_id}', [SubcategoryController::class, 'getSubcategories'])
+    ->name('admin.getSubcategories');
 });

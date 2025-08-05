@@ -16,14 +16,24 @@ class SubcategoryController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->ajax()) {
-            $data = Subcategory::withTrashed()->with('category')->select('subcategories.*');
+        if ($request->ajax()) 
+        {
+            $data = Subcategory::withTrashed()
+                ->with('category')
+                ->select('subcategories.*');
+
             return DataTables::of($data)
-                ->addColumn('category', fn($row) => $row->category->name ?? 'N/A')
-                ->addColumn('status', fn($row) => $row->deleted_at 
-                    ? '<span class="badge bg-secondary">Deleted</span>' 
-                    : '<span class="badge bg-success">'.$row->status.'</span>'
-                )
+                ->addColumn('category', function ($row) {
+                    return $row->category->name ?? 'N/A';
+                })
+                ->addColumn('status', function ($row) {
+                    if ($row->deleted_at) {
+                        return '<span class="badge bg-secondary">Deleted</span>';
+                    }
+
+                    $badgeClass = $row->status === 'inactive' ? 'bg-danger' : 'bg-success';
+                    return '<span class="badge '.$badgeClass.'">'.ucfirst($row->status).'</span>';
+                })
                 ->addColumn('action', function ($row) {
                     if ($row->deleted_at) {
                         return '
@@ -33,15 +43,16 @@ class SubcategoryController extends Controller
                             </form>
                             <form action="'.route('admin.subcategories.forceDelete', $row->id).'" method="POST" style="display:inline;">
                                 '.csrf_field().method_field('DELETE').'
-                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Permanently delete?\')">Delete</button>
                             </form>
                         ';
                     }
+
                     return '
                         <a href="'.route('admin.subcategories.edit', $row->id).'" class="btn btn-primary btn-sm">Edit</a>
                         <form action="'.route('admin.subcategories.destroy', $row->id).'" method="POST" style="display:inline;">
                             '.csrf_field().method_field('DELETE').'
-                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Soft delete this?\')">Delete</button>
                         </form>
                     ';
                 })

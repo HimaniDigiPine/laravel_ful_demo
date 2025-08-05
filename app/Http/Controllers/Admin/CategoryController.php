@@ -48,15 +48,17 @@ class CategoryController extends Controller
                     return $buttons;
                 })
                 ->addColumn('status', function ($row) {
-                    return $row->deleted_at
-                        ? '<span class="badge bg-secondary">Deleted</span>'
-                        : '<span class="badge bg-success">'.ucfirst($row->status).'</span>';
+                    if ($row->deleted_at) {
+                        return '<span class="badge bg-secondary">Deleted</span>';
+                    }
+
+                    $badgeClass = $row->status === 'inactive' ? 'bg-danger' : 'bg-success';
+                    return '<span class="badge '.$badgeClass.'">'.ucfirst($row->status).'</span>';
                 })
                 ->rawColumns(['action', 'status'])
                 ->make(true);
         }
-
-        return view('admin.categories.index');
+                return view('admin.categories.index');
     }
 
     /**
