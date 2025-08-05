@@ -87,7 +87,7 @@
                     <!--begin:Menu item-->
                     <div class="menu-item">
                         <!--begin:Menu link-->
-                        <a class="menu-link" href="{{ route('admin.product.index') }}">
+                        <a class="menu-link" href="{{ route('admin.products.index') }}">
 	                        <span class="menu-icon">
 		                        <i class="ki-duotone ki-code fs-2">
 			                        <span class="path1"></span>
