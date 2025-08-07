@@ -6,7 +6,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\SubcategoryController;
 use App\Http\Controllers\Admin\ProductController;
-
+use App\Http\Controllers\PageController;
+use App\Http\Controllers\Admin\GalleryController;
 
 
 
@@ -18,8 +19,22 @@ Route::get('/', function () {
 
 
 // Admin 
-Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware(RoleMiddleware::class);
-Route::get('/middlewareCheck', [HomeController::class, 'middlewareCheck'])->name('middlewareCheck');
+Route::get('/home', [HomeController::class, 'index'])
+    ->middleware('auth') 
+    ->name('home');
+
+
+Route::get('/hello-admin', [PageController::class, 'helloAdmin'])
+    ->middleware('role:admin')
+    ->name('hello.admin');
+
+Route::get('/hello-staff', [PageController::class, 'helloStaff'])
+    ->middleware('role:admin,staff')
+    ->name('hello.staff');
+
+Route::get('/hello-user', [PageController::class, 'helloUser'])
+    ->middleware('role:admin,staff,user')
+    ->name('hello.user');
 
 
 //Categories
@@ -54,3 +69,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
     // AJAX - Get Subcategories by Category
     Route::get('get-subcategories/{categoryId}', [ProductController::class, 'getSubcategories'])->name('products.getSubcategories');
 });
+
+
+//Galleries
+Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
+    Route::resource('galleries', GalleryController::class);
+    Route::post('galleries/restore/{id}', [GalleryController::class, 'restore'])->name('galleries.restore');
+    Route::delete('galleries/force-delete/{id}', [GalleryController::class, 'forceDelete'])->name('galleries.forceDelete');
+    Route::post('galleries/bulk-delete', [GalleryController::class, 'bulkDelete'])->name('galleries.bulkDelete');
+});
+

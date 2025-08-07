@@ -30,7 +30,9 @@
 				<!--begin::Menu-->
 				<div class="menu menu-column menu-rounded menu-sub-indention fw-semibold fs-6" id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
 					
-					 <!--begin:Menu item-->
+
+					@if(in_array(auth()->user()->role, ['admin', 'staff']))
+					<!--begin:Menu item-->
                     <div class="menu-item">
                         <!--begin:Menu link-->
                         <a class="menu-link" href="{{ route('home') }}">
@@ -101,6 +103,52 @@
                         <!--end:Menu link-->
                     </div>
                     <!--end:Menu item--> 
+
+                    <!--begin:Menu item-->
+                    <div class="menu-item">
+                        <!--begin:Menu link-->
+                        <a class="menu-link" href="{{ route('admin.galleries.index') }}">
+	                        <span class="menu-icon">
+		                        <i class="ki-duotone ki-code fs-2">
+			                        <span class="path1"></span>
+			                        <span class="path2"></span>
+			                        <span class="path3"></span>
+			                        <span class="path4"></span>
+		                        </i>
+	                        </span>
+	                        <span class="menu-title">Galleries</span>
+                        </a>
+                        <!--end:Menu link-->
+                    </div>
+                    <!--end:Menu item--> 
+
+                    @endif
+
+                    <ul class="menu-nav">
+					    @if(in_array(auth()->user()->role, ['admin']))
+					        <li class="menu-item">
+					            <a href="{{ route('hello.admin') }}" class="menu-link">
+					                <span class="menu-text">Hello Admin</span>
+					            </a>
+					        </li>
+					    @endif
+
+					    @if(in_array(auth()->user()->role, ['admin', 'staff']))
+					        <li class="menu-item">
+					            <a href="{{ route('hello.staff') }}" class="menu-link">
+					                <span class="menu-text">Hello Staff</span>
+					            </a>
+					        </li>
+					    @endif
+
+					    @if(in_array(auth()->user()->role, ['admin', 'staff', 'user']))
+					        <li class="menu-item">
+					            <a href="{{ route('hello.user') }}" class="menu-link">
+					                <span class="menu-text">Hello User</span>
+					            </a>
+					        </li>
+					    @endif
+					</ul>
 
 				</div>
 				<!--end::Menu-->

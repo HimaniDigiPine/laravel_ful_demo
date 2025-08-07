@@ -14,14 +14,21 @@ class RoleMiddleware
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next, ...$roles): Response
     {
         // Allow register and login routes
         
-        if (Auth::check() && Auth::user()->email === 'himani@digipineinfotech.com') {
-            return $next($request);
+        if (!Auth::check()) {
+            return redirect('login');
         }
 
-        return redirect('/middlewareCheck')->with('error', 'Unauthorized access.');
+        $userRole = Auth::user()->role;
+
+        // Check if user role is allowed
+        if (!in_array($userRole, $roles)) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        return $next($request);
     }
 }
