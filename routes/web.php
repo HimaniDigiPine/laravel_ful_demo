@@ -8,20 +8,24 @@ use App\Http\Controllers\Admin\SubcategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\Admin\GalleryController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\CustomAuthController;
+//use App\Http\Middleware\CheckLogin;
 
 
 
 Auth::routes();
-Route::get('/', function () {
-    return view('auth.login');
-});
 
+
+Route::get('/', function () {
+    return view('frontend.dashboard');
+})->name('userdashboard');
 
 
 // Admin 
 Route::get('/home', [HomeController::class, 'index'])
     ->middleware('auth') 
-    ->name('home');
+       ->name('home');
 
 
 Route::get('/hello-admin', [PageController::class, 'helloAdmin'])
@@ -35,6 +39,24 @@ Route::get('/hello-staff', [PageController::class, 'helloStaff'])
 Route::get('/hello-user', [PageController::class, 'helloUser'])
     ->middleware('role:admin,staff,user')
     ->name('hello.user');
+
+ 
+
+Route::get('/userlogin', [CustomAuthController::class, 'showLoginForm'])->name('user.login.form');
+Route::post('/userlogin', [CustomAuthController::class, 'login'])->name('user.login');
+Route::get('/userlogout', [CustomAuthController::class, 'logout'])->name('user.logout');
+
+Route::middleware(['checkLogin'])->group(function () {
+    Route::get('/user/dashboard', [CustomAuthController::class, 'dashboard'])->name('user.dashboard');
+});
+
+Route::post('/logout', [CustomAuthController::class, 'logout'])->name('logout'); 
+
+Route::get('/adminlogin', function () {
+    return view('auth.login');
+})->name('adminlogin');
+
+
 
 
 //Categories
@@ -77,5 +99,14 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::post('galleries/restore/{id}', [GalleryController::class, 'restore'])->name('galleries.restore');
     Route::delete('galleries/force-delete/{id}', [GalleryController::class, 'forceDelete'])->name('galleries.forceDelete');
     Route::post('galleries/bulk-delete', [GalleryController::class, 'bulkDelete'])->name('galleries.bulkDelete');
+});
+
+// Users
+Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
+    Route::resource('users', UserController::class);
+
+    Route::post('users/restore/{id}', [UserController::class, 'restore'])->name('users.restore');
+    Route::delete('users/force-delete/{id}', [UserController::class, 'forceDelete'])->name('users.forceDelete');
+    Route::delete('users/bulk-delete', [UserController::class, 'bulkDelete'])->name('users.bulkDelete');
 });
 

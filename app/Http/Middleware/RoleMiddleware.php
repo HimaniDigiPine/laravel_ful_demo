@@ -29,6 +29,10 @@ class RoleMiddleware
             abort(403, 'Unauthorized action.');
         }
 
+        if (!session()->has('user')) {
+            return redirect()->route('user.login.form');
+        }
+
         return $next($request);
     }
 }
